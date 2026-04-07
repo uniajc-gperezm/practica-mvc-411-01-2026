@@ -10,7 +10,7 @@ public class Main {
         System.out.println("Practica MVC - Uniajc!");
 
         // Creando un estudiante desde su modelo
-        Estudiante estudiante = new Estudiante();
+        Estudiante estudiante = new Estudiante(1, "Juan Perez", 20);
 
         // Creando la vista de estudiante
         VistaEstudiante vista = new VistaEstudiante();
@@ -19,14 +19,48 @@ public class Main {
         ControladorEstudiante controlador = new ControladorEstudiante(vista, estudiante);
 
         // Mostrando los detalles del estudiante a través del controlador
-        controlador.actualizarVista();
+        // controlador.actualizarVista();
 
         // Actualizando los datos del estudiante a través del controlador
-        controlador.setNombre("Maria Gomez");
-        controlador.setEdad(22);
+        // controlador.setNombre("Maria Gomez");
+        // controlador.setEdad(22);
 
         // Actualizando la vista con los nuevos datos
-        controlador.actualizarVista();
+        // controlador.actualizarVista();
 
+
+        // Probar funcionalidades CRUD adicionales
+
+        // Crear un nuevo estudiante
+        Estudiante estudiante1 = new Estudiante(1, "Juan Perez", 20);
+        Estudiante estudiante2 = new Estudiante(2, "Ana Martinez", 21);
+        Estudiante estudiante3 = new Estudiante(3, "Carlos Lopez", 19);
+
+        controlador.agregarEstudiante(estudiante1);
+        controlador.agregarEstudiante(estudiante2);
+        controlador.agregarEstudiante(estudiante3);
+
+        // Mostrar todos los estudiantes
+        controlador.mostrarTodosLosEstudiantes();
+
+        // Actualizar un estudiante
+        controlador.actualizarEstudiante(2, "Ana Martinez Gomez", 22);
+
+        // Mostrar todos los estudiantes
+        controlador.mostrarTodosLosEstudiantes();
+
+        // Eliminar un estudiante
+        controlador.eliminarEstudiante(1);
+
+        // Mostrar todos los estudiantes        controlador.mostrarTodosLosEstudiantes();
+        controlador.mostrarTodosLosEstudiantes();
+
+        // Obtener un estudiante por su ID
+        Estudiante estudianteObtenido = controlador.obtenerEstudiantePorId(3);
+        if (estudianteObtenido != null) {
+            System.out.println("Estudiante encontrado: " + estudianteObtenido.getNombre());
+        } else {        
+            System.out.println("Estudiante no encontrado");
+        }
     }
 }
