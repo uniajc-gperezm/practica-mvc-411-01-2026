@@ -24,12 +24,12 @@ public class ConexionPostgresDatabase {
                 String url = properties.getProperty("db.url");
                 String user = properties.getProperty("db.user");
                 String password = properties.getProperty("db.password");
-
+                
                 // Establecer la conexión
                 connection = DriverManager.getConnection(url, user, password);
-                System.out.println("Conexión a PostgreSQL exitosa.");
+                System.out.println("Conexión a base de datos exitosa.");
             } catch (SQLException error) {
-                System.out.println("Failed to establish PostgreSQL connection. " + error.getMessage());
+                System.out.println("Failed to establish database connection. " + error.getMessage());
                 error.printStackTrace();
             } catch (FileNotFoundException error) {
                 error.printStackTrace();
@@ -44,10 +44,10 @@ public class ConexionPostgresDatabase {
         if (connection != null) {
             try {
                 connection.close();
-                System.out.println("PostgreSQL connection closed successfully.");
+                System.out.println("Database connection closed successfully.");
             } catch (SQLException e) {
                 e.printStackTrace();
-                System.out.println("Failed to close PostgreSQL connection. " + e.getMessage());
+                System.out.println("Failed to close database connection. " + e.getMessage());
             }
         }
     }
