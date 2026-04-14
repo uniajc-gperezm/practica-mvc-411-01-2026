@@ -3,59 +3,41 @@ package com.uniajc.controlador;
 import java.util.List;
 
 import com.uniajc.modelo.Estudiante;
+import com.uniajc.servicios.EstudianteService;
 import com.uniajc.vista.VistaEstudiante;
 
 public class ControladorEstudiante {
 
     private VistaEstudiante vista;
-    private Estudiante estudiante;
+    private EstudianteService servicio;
 
-    public ControladorEstudiante(VistaEstudiante vista, Estudiante estudiante) {
+    public ControladorEstudiante(VistaEstudiante vista, EstudianteService servicio) {
         this.vista = vista;
-        this.estudiante = estudiante;
+        this.servicio = servicio;
     }
 
-   public String getNombre() {
-        return estudiante.getNombre();
-    }
+    public void registrarEstudiante() {
+        // Aquí se pueden agregar validaciones o lógica adicional antes de registrar el estudiante
+        // Por ejemplo, verificar que el email tenga un formato válido o que los campos no estén vacíos
 
-    public void setNombre(String nombre) {
-        estudiante.setNombre(nombre);
-    }
+        try {
+            Estudiante estudiante = vista.solicitarDatosEstudiante();
 
-    public int getEdad() {
-        return estudiante.getEdad();
-    }
+            if (estudiante != null) {
+                servicio.registrarEstudiante(estudiante);
+                vista.mostrarMensaje("Estudiante registrado exitosamente.");
+            }
 
-    public void setEdad(int edad) {
-        estudiante.setEdad(edad);
-    }
+        } catch (Exception e) {
+            vista.mostrarMensaje("Error al registrar el estudiante.");
+        }
 
-    public List<Estudiante> getEstudiantes() {
-        return estudiante.getEstudiantes();
-    }
-
-    public void agregarEstudiante(Estudiante nuevoEstudiante) {
-        estudiante.agregarEstudiante(nuevoEstudiante);
-    }
-
-    public void actualizarEstudiante(int id, String nuevoNombre, int nuevaEdad) {
-        estudiante.actualizarEstudiante(id, nuevoNombre, nuevaEdad);
-    }
-
-    public Estudiante obtenerEstudiantePorId(int id) {
-        return estudiante.obtenerEstudiantePorId(id);
-    }
-
-    public void eliminarEstudiante(int id) {
-        estudiante.eliminarEstudiante(id);
-    }
-
-    public void actualizarVista() {
-        vista.mostrarDetallesEstudiante(estudiante);
     }
 
     public void mostrarTodosLosEstudiantes() {
-        vista.mostrarTodosLosEstudiantes(estudiante.getEstudiantes());
+        
+        // Llamar al método de la vista para mostrar la lista de estudiantes
+        vista.mostrarTodosLosEstudiantes(servicio.obtenerTodosLosEstudiantes());
     }
+
 }

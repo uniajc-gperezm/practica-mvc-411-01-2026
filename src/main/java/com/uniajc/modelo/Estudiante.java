@@ -5,14 +5,16 @@ public class Estudiante {
     
     private int id;
     private String nombre;
-    private int edad;
+    private String apellido;
+    private String email;
 
     public Estudiante() { }
 
-    public Estudiante(int id, String nombre, int edad) {
+    public Estudiante(int id, String nombre, String apellido, String email) {
         this.id = id;
         this.nombre = nombre;
-        this.edad = edad;
+        this.apellido = apellido;
+        this.email = email;
     }
 
     public int getId() {
@@ -22,7 +24,7 @@ public class Estudiante {
     public void setId(int id) {
         this.id = id;
     }
-
+  
     public String getNombre() {
         return nombre;
     }
@@ -31,12 +33,20 @@ public class Estudiante {
         this.nombre = nombre;
     }
 
-    public int getEdad() {
-        return edad;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }
