@@ -6,7 +6,7 @@ import com.uniajc.vista.VistaEstudiante;
 
 public class ControladorEstudiante {
 
-    private List<Estudiante> estudiantes;
+    
     private VistaEstudiante vista;
     private Estudiante estudiante;
 
@@ -21,7 +21,7 @@ public class ControladorEstudiante {
     }
 
     public void setNombre(String nombre) {
-        estudiante.setNombre(nombre);;
+        estudiante.setNombre(nombre);
     }
 
     public int getEdad() {
@@ -29,12 +29,35 @@ public class ControladorEstudiante {
     }
 
     public void setEdad(int edad) {
-        estudiante.setEdad(edad);;
+        estudiante.setEdad(edad);
     }
-    
-    public void actualizarVista(){
+
+    public List<Estudiante> getEstudiantes() {
+        return estudiante.getEstudiantes();
+    }
+
+    public void agregarEstudiante(Estudiante nuevoEstudiante) {
+        estudiante.agregarEstudiante(nuevoEstudiante);
+    }
+
+    public void actualizarEstudiante(int id, String nuevoNombre, int nuevaEdad) {
+        estudiante.actualizarEstudiante(id, nuevoNombre, nuevaEdad);
+    }
+
+    public Estudiante obtenerEstudiantePorId(int id) {
+        return estudiante.obtenerEstudianteID(id);
+    }
+
+    public void eliminarEstudiante(int id) {
+        estudiante.eliminarEstudiante(id);
+    }
+
+    public void actualizarVista() {
         vista.mostrarDetallesEstudiante(estudiante);
     }
-    
+
+    public void mostrarTodosLosEstudiantes() {
+        vista.mostrarTodosLosEstudiantes(estudiante.getEstudiantes());
+    }
 
 }
