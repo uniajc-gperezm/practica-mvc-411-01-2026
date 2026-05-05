@@ -5,50 +5,41 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Clase de utilidad para gestionar la conexión a la base de datos siguiendo el patrón Factory.
+ * En aplicaciones reales, aquí se configuraría un Connection Pool como HikariCP.
+ */
 public class ConexionPostgresDatabase {
-    private static Connection connection = null;
+    private static final Properties properties = new Properties();
 
-    public static Connection getConnection() {
-        // Usamos un objeto Properties para cargar los parámetros de conexión desde un archivo de configuración
-        Properties properties = new Properties();
-        if (connection == null) {
-            try {
-                // Cargar las propiedades desde el archivo config-postgres.properties
-                properties.load(new FileInputStream(new File("config.properties")));
-
-                // Definir los parámetros de conexión
-                String url = properties.getProperty("db.url");
-                String user = properties.getProperty("db.user");
-                String password = properties.getProperty("db.password");
-                
-                // Establecer la conexión
-                connection = DriverManager.getConnection(url, user, password);
-                System.out.println("Conexión a base de datos exitosa.");
-            } catch (SQLException error) {
-                System.out.println("Failed to establish database connection. " + error.getMessage());
-                error.printStackTrace();
-            } catch (FileNotFoundException error) {
-                error.printStackTrace();
-            } catch (IOException error) {
-                error.printStackTrace();
-            }
-        }
-        return connection;
-    }
-
-    public static void closeConnection() {
-        if (connection != null) {
-            try {
-                connection.close();
-                System.out.println("Database connection closed successfully.");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("Failed to close database connection. " + e.getMessage());
-            }
+    static {
+        // Cargamos las propiedades una sola vez al inicio de la aplicación
+        try (FileInputStream fis = new FileInputStream(new File("config.properties"))) {
+            properties.load(fis);
+        } catch (IOException e) {
+            System.err.println("CRITICAL: Failed to load config.properties. " + e.getMessage());
         }
     }
+
+    /**
+     * Retorna una NUEVA conexión para cada llamada.
+     * Permite que el DAO gestione el ciclo de vida de la conexión mediante try-with-resources.
+     */
+    public static Connection getConnection() throws SQLException {
+        String url = properties.getProperty("db.url");
+        String user = properties.getProperty("db.user");
+        String password = properties.getProperty("db.password");
+        
+        if (url == null || user == null) {
+            throw new SQLException("Database configuration is missing or invalid.");
+        }
+        
+        return DriverManager.getConnection(url, user, password);
+    }
+
+    // Ya no necesitamos un closeConnection() estático global, 
+    // porque cada conexión devuelta es independiente y debe ser cerrada por quien la solicitó.
 }
