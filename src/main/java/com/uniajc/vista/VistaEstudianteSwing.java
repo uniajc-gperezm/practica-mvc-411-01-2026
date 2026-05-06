@@ -50,14 +50,14 @@ public class VistaEstudianteSwing extends JPanel implements ActionListener {
 
     // Elementos o Componentes de la interfaz
     private JTable tablaEstudiantes;
-    private DefaultTableModel modeloTabla;
+    private DefaultTableModel modeloTabla; // Modelo para la tabla de estudiantes
     private JTextField textoBusqueda;
     private JButton botonBuscar;
     private JButton botonLimpiar;
     private JButton botonRegistrar;
     private JButton botonEditar;
     private JButton botonEliminar;
-    private JButton botonActualizar;
+    // private JButton botonActualizar;
 
     // Elementos para el diálogo de registro/edición de estudiantes
     private JDialog dialogoFormulario;
@@ -134,6 +134,7 @@ public class VistaEstudianteSwing extends JPanel implements ActionListener {
             }
         };
 
+        // Configurar la tabla de estudiantes con un diseño más moderno
         tablaEstudiantes = new JTable(modeloTabla);
         tablaEstudiantes.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         tablaEstudiantes.setRowHeight(25);
@@ -143,11 +144,13 @@ public class VistaEstudianteSwing extends JPanel implements ActionListener {
         tablaEstudiantes.setSelectionBackground(COLOR_PRIMARIO);
         tablaEstudiantes.setSelectionForeground(Color.WHITE);
 
+        // Configurar el encabezado de la tabla para que tenga un estilo más atractivo
         tablaEstudiantes.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
         tablaEstudiantes.getTableHeader().setBackground(COLOR_PRIMARIO);
         tablaEstudiantes.getTableHeader().setForeground(Color.WHITE);
         tablaEstudiantes.getTableHeader().setReorderingAllowed(false);
 
+        // Configurar el renderizado de las celdas para mejorar la apariencia y legibilidad
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -156,21 +159,27 @@ public class VistaEstudianteSwing extends JPanel implements ActionListener {
                 return c;
             }
         };
+
+        // Centrar el texto en las celdas de la tabla
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
 
+        // Aplicar el renderizador a todas las columnas de la tabla
         for (int i = 0; i < COLUMNAS.length; i++) {
             tablaEstudiantes.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
 
+        // Configurar el ancho de las columnas para una mejor distribución del espacio
         tablaEstudiantes.getColumnModel().getColumn(0).setPreferredWidth(50);
         tablaEstudiantes.getColumnModel().getColumn(1).setPreferredWidth(150);
         tablaEstudiantes.getColumnModel().getColumn(2).setPreferredWidth(150);
         tablaEstudiantes.getColumnModel().getColumn(3).setPreferredWidth(200);
 
+        // Configurar el panel de desplazamiento para la tabla con un borde personalizado
         JScrollPane scrollPane = new JScrollPane(tablaEstudiantes);
         scrollPane.setBorder(BorderFactory.createLineBorder(COLOR_PRIMARIO, 2));
         scrollPane.setPreferredSize(new Dimension(600, 400));
 
+        // Agregar el panel de desplazamiento al panel principal de la tabla
         panel.add(scrollPane, BorderLayout.CENTER);
 
         return panel;
@@ -198,14 +207,14 @@ public class VistaEstudianteSwing extends JPanel implements ActionListener {
         botonEliminar.setPreferredSize(new Dimension(130, 40));
         botonEliminar.addActionListener(e -> eliminarEstudiante());
 
-        botonActualizar = crearBoton("Actualizar", new Color(149, 165, 166));
-        botonActualizar.setPreferredSize(new Dimension(130, 40));
-        botonActualizar.addActionListener(e -> cargarEstudiantes());
+        // botonActualizar = crearBoton("Actualizar", new Color(149, 165, 166));
+        // botonActualizar.setPreferredSize(new Dimension(130, 40));
+        // botonActualizar.addActionListener(e -> cargarEstudiantes());
 
         panel.add(botonRegistrar);
         panel.add(botonEditar);
         panel.add(botonEliminar);
-        panel.add(botonActualizar);
+        //panel.add(botonActualizar);
 
         return panel;
     }
@@ -277,7 +286,7 @@ public class VistaEstudianteSwing extends JPanel implements ActionListener {
 
         dialogoFormulario = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this),
             esEdicion ? "Editar Estudiante" : "Registrar Estudiante", true);
-        dialogoFormulario.setSize(450, 320);
+        dialogoFormulario.setSize(450, 350);
         dialogoFormulario.setLocationRelativeTo(this);
         dialogoFormulario.setResizable(false);
 
